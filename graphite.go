@@ -5,25 +5,38 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
+	"strconv"
 	"time"
 )
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
 
 // Graphite is a struct that defines the relevant properties of a graphite
 // connection
 type Graphite struct {
-	Host     string
-	Port     int
-	Protocol string
-	Timeout  time.Duration
-	Prefix   string
-	conn     net.Conn
-	nop      bool
+	Host       string
+	Port       int
+	Protocol   string
+	Timeout    time.Duration
+	Prefix     string
+	conn       net.Conn
+	nop        bool
 	DisableLog bool
 }
 
 // defaultTimeout is the default number of seconds that we're willing to wait
 // before forcing the connection establishment to fail
 const defaultTimeout = 5
+
+var host = getEnv("GRAPHITE_HOST", "0.0.0.0")
+var portStr = getEnv("GRAPHITE_PORT", "2003")
+var port, err = strconv.ParseInt(portStr, 10, 12)
 
 // IsNop is a getter for *graphite.Graphite.nop
 func (graphite *Graphite) IsNop() bool {
@@ -82,7 +95,6 @@ func (graphite *Graphite) Disconnect() error {
 func (graphite *Graphite) SendMetric(metric Metric) error {
 	metrics := make([]Metric, 1)
 	metrics[0] = metric
-
 	return graphite.sendMetrics(metrics)
 }
 
