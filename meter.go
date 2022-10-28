@@ -1,14 +1,16 @@
 package graphite
 
 type Meter struct {
-	Key string
-	g   *Graphite
+	Key   string
+	Value string
+	g     *Graphite
 }
 
 // Sends a value to Meter with key
 // ex: Mark("mystat")
 func (c Meter) Mark(key, value string) Meter {
 	c.Key = key
+	c.Value = value
 	c.g.SimpleSend(key, value)
 	return c
 }
@@ -16,7 +18,8 @@ func (c Meter) Mark(key, value string) Meter {
 // Pushes a new value to a previously
 // recorded Mark
 func (c Meter) Update(value string) Meter {
-	c.g.SimpleSend(c.Key, value)
+	c.Value = value
+	c.g.SimpleSend(c.Key, c.Value)
 	return c
 }
 
