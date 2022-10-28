@@ -3,6 +3,8 @@
 A simple Graphite interface.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/srslafazan/go-graphite.svg)](https://pkg.go.dev/github.com/srslafazan/go-graphite)
+[![Status](https://github.com/srslafazan/go-graphite/actions/workflows/package.yaml/badge.svg)](https://github.com/srslafazan/go-graphite/actions/workflows/package.yaml)
+
 
 > Note: Supports TCP, only.
 > Underlying interfaces support both TCP and UDP.
