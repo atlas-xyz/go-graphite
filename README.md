@@ -35,7 +35,7 @@ import (
 )
 
 func UsingRawGraphite() {
-  // Using raw graphite
+  	// Using raw graphite
 	Graphite, err := graphite.NewGraphite("localhost", 2003)
 	log.Printf("Loaded Graphite connection: %#v", Graphite)
 	if err != nil {
@@ -45,7 +45,7 @@ func UsingRawGraphite() {
 }
 
 func UsingTimer() {
-  // Creating a timer
+ 	// Creating a timer
 	timer := graphite.NewTimer("prefix", "metric.name", time.Second)
 	log.Printf("Created timer...: %#v", timer)
 	clock := timer.Start("mytimestat")
@@ -56,7 +56,7 @@ func UsingTimer() {
 }
 
 func UsingMark() {
-  // Marking a single Metric
+  	// Marking a single Metric
 	meter := graphite.GetOrCreateMeter("prefix")
 	log.Printf("Created meter...: %#v", meter)
 	mark := meter.Mark("metric.name", "1")
@@ -69,7 +69,7 @@ func UsingMark() {
 
 func main() {
 	UsingRawGraphite()
-  UsingTimer()
+  	UsingTimer()
 	UsingMark()
 }
 ```
